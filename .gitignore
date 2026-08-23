@@ -1,0 +1,5 @@
+# Source document — its contents are already published in index.html
+*.pdf
+
+# macOS
+.DS_Store

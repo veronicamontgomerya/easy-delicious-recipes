@@ -1,0 +1,1023 @@
+<meta charset="utf-8">
+<title>Easy &amp; Delicious</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Karla:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --paper: #F6F7F2;
+    --surface: #FFFFFF;
+    --ink: #17231B;
+    --ink-soft: #5C6A5F;
+    --ink-faint: #8A968C;
+    --line: #DDE2D7;
+    --line-soft: #EAEEE5;
+    --green: #14684B;
+    --green-deep: #0E4E38;
+    --green-wash: #E6EFE8;
+    --amber: #9C5D00;
+    --amber-bright: #B26B00;
+    --amber-wash: #FBF1DD;
+    --amber-line: #E3C289;
+
+    --f-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --f-body: "Karla", "Helvetica Neue", Arial, sans-serif;
+    --f-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --measure: 62ch;
+    --shell: 1080px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #10140F;
+      --surface: #171D18;
+      --ink: #E9EEE6;
+      --ink-soft: #9DAA9F;
+      --ink-faint: #74806F;
+      --line: #29332A;
+      --line-soft: #202920;
+      --green: #6BCB9E;
+      --green-deep: #8FDCB7;
+      --green-wash: #16281F;
+      --amber: #E5A64A;
+      --amber-bright: #F0B75F;
+      --amber-wash: #241C11;
+      --amber-line: #4C3A1C;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #10140F;
+    --surface: #171D18;
+    --ink: #E9EEE6;
+    --ink-soft: #9DAA9F;
+    --ink-faint: #74806F;
+    --line: #29332A;
+    --line-soft: #202920;
+    --green: #6BCB9E;
+    --green-deep: #8FDCB7;
+    --green-wash: #16281F;
+    --amber: #E5A64A;
+    --amber-bright: #F0B75F;
+    --amber-wash: #241C11;
+    --amber-line: #4C3A1C;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .shell {
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    padding-inline: 28px;
+  }
+
+  .mono {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- masthead ---------- */
+
+  .masthead {
+    padding-block: clamp(56px, 11vw, 104px) 0;
+  }
+
+  .eyebrow {
+    color: var(--ink-faint);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+
+  .eyebrow::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .masthead h1 {
+    font-family: var(--f-display);
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 40, "WONK" 1;
+    font-weight: 600;
+    font-size: clamp(3.1rem, 10.5vw, 6.4rem);
+    line-height: 0.94;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .masthead h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--green);
+  }
+
+  .masthead .intro {
+    max-width: var(--measure);
+    margin: 30px 0 0;
+    font-size: 1.075rem;
+    color: var(--ink-soft);
+  }
+
+  .masthead .intro strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .tally {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    margin-top: 34px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-faint);
+  }
+
+  .tally b {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ---------- filter bar ---------- */
+
+  .filters {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-top: 44px;
+    padding-block: 14px;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .filters-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .filters .label {
+    color: var(--ink-faint);
+    margin-right: 6px;
+  }
+
+  .chip {
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 13px 5px;
+    cursor: pointer;
+    transition: color .15s, border-color .15s, background .15s;
+  }
+
+  .chip:hover { border-color: var(--ink-faint); color: var(--ink); }
+
+  .chip[aria-pressed="true"] {
+    color: var(--paper);
+    background: var(--green-deep);
+    border-color: var(--green-deep);
+  }
+
+  .chip.hack-chip[aria-pressed="true"] {
+    background: var(--amber-bright);
+    border-color: var(--amber-bright);
+    color: #FFF9EE;
+  }
+
+  :root[data-theme="dark"] .chip[aria-pressed="true"],
+  :root[data-theme="dark"] .chip.hack-chip[aria-pressed="true"] { color: #0E120D; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .chip[aria-pressed="true"],
+    :root:not([data-theme="light"]) .chip.hack-chip[aria-pressed="true"] { color: #0E120D; }
+  }
+
+  .count {
+    margin-left: auto;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- sections ---------- */
+
+  main { padding-bottom: 40px; }
+
+  .course { padding-top: clamp(48px, 7vw, 76px); }
+
+  .course-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+
+  .course-head h2 {
+    font-family: var(--f-display);
+    font-variation-settings: "SOFT" 40, "WONK" 1;
+    font-weight: 600;
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .course-head .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .course-head .n {
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- recipe entry ---------- */
+
+  .recipe {
+    display: grid;
+    grid-template-columns: 168px minmax(0, 1fr);
+    gap: 0 36px;
+    padding-block: 34px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .recipe:first-of-type { border-top: 1px solid var(--line); }
+
+  .rail {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    padding-top: 5px;
+  }
+
+  .kind {
+    font-family: var(--f-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    padding: 4px 9px 3px;
+    border-radius: 3px;
+    border: 1px solid;
+  }
+
+  .kind[data-kind="shortcut"] {
+    color: var(--amber);
+    border-color: var(--amber-line);
+    background: var(--amber-wash);
+  }
+
+  .kind[data-kind="original"] {
+    color: var(--green);
+    border-color: color-mix(in srgb, var(--green) 40%, transparent);
+    background: var(--green-wash);
+  }
+
+  .kind[data-kind="as-written"] {
+    color: var(--ink-soft);
+    border-color: var(--line);
+    background: transparent;
+  }
+
+  .rail .meta {
+    font-family: var(--f-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .body h3 {
+    font-family: var(--f-display);
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 30, "WONK" 0;
+    font-weight: 600;
+    font-size: 1.55rem;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .note {
+    max-width: var(--measure);
+    color: var(--ink-soft);
+    margin: 10px 0 0;
+    font-size: 0.97rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .rlink {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 8px 13px;
+    transition: border-color .15s, color .15s, transform .15s;
+  }
+
+  .rlink:hover {
+    border-color: var(--green);
+    color: var(--green-deep);
+    transform: translateY(-1px);
+  }
+
+  .rlink .arrow {
+    font-family: var(--f-mono);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+  }
+
+  .rlink:hover .arrow { color: var(--green); }
+
+  .rlink .tag {
+    font-family: var(--f-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- the hack ---------- */
+
+  .hack {
+    margin-top: 18px;
+    max-width: var(--measure);
+    border-left: 3px solid var(--amber-bright);
+    background: var(--amber-wash);
+    border-radius: 0 5px 5px 0;
+    padding: 14px 18px 15px;
+  }
+
+  .hack .h-label {
+    font-family: var(--f-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .hack p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  details.mods {
+    margin-top: 12px;
+    max-width: var(--measure);
+  }
+
+  details.mods > summary {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+  }
+
+  details.mods > summary::-webkit-details-marker { display: none; }
+
+  details.mods > summary::before {
+    content: "+";
+    display: inline-block;
+    width: 1em;
+    color: var(--amber);
+    font-size: 0.95rem;
+  }
+
+  details.mods[open] > summary::before { content: "\2212"; }
+
+  details.mods > summary:hover { color: var(--ink); }
+
+  .mods ul {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .mods li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.96rem;
+    color: var(--ink-soft);
+  }
+
+  .mods li::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 0.62em;
+    width: 7px;
+    height: 1px;
+    background: var(--amber-line);
+  }
+
+  .mods li b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- full custom recipe ---------- */
+
+  .card {
+    margin-top: 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 26px 28px 28px;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 30px 40px;
+  }
+
+  .card h4 {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .card ul.ing {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 0.95rem;
+  }
+
+  .card ul.ing li {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+
+  .card ul.ing .qty {
+    font-family: var(--f-mono);
+    font-size: 0.8rem;
+    color: var(--green);
+    min-width: 3.4em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .card ol.steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .card ol.steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 32px;
+    font-size: 0.96rem;
+    color: var(--ink-soft);
+  }
+
+  .card ol.steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0.05em;
+    font-family: var(--f-mono);
+    font-size: 0.72rem;
+    color: var(--green);
+    border: 1px solid color-mix(in srgb, var(--green) 35%, transparent);
+    border-radius: 50%;
+    width: 21px;
+    height: 21px;
+    display: grid;
+    place-items: center;
+  }
+
+  .serves {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: -6px 0 20px;
+  }
+
+  .empty {
+    padding: 60px 0 20px;
+    color: var(--ink-faint);
+    font-size: 0.98rem;
+  }
+
+  .empty[hidden] { display: none; }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    margin-top: 70px;
+    padding-block: 30px 60px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-faint);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    align-items: baseline;
+  }
+
+  footer .sig {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: 1.05rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- responsive ---------- */
+
+  @media (max-width: 780px) {
+    .recipe {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+    .rail {
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 0;
+    }
+    .card-grid { grid-template-columns: minmax(0, 1fr); }
+    .card { padding: 22px 20px 24px; }
+    .shell { padding-inline: 20px; }
+    body { font-size: 16px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+    .rlink:hover { transform: none; }
+  }
+</style>
+
+<header class="masthead">
+  <div class="shell">
+    <p class="mono eyebrow">A working recipe index</p>
+    <h1>Easy <em>&amp;</em><br>Delicious</h1>
+    <p class="intro">
+      When I'm cooking, I'm always trying to be as efficient with my time as possible &mdash; but I don't want
+      to sacrifice the quality of the meal to do it. So I've collected recipes that are <strong>both easy and
+      delicious</strong>, plus the hacks that make good recipes faster. What's below is a mix of straight links,
+      links with time-saving modifications, and a couple of recipes of my own. Enjoy!
+    </p>
+    <p class="mono tally">
+      <span><b>11</b> recipes</span>
+      <span><b>4</b> with shortcuts</span>
+      <span><b>1</b> original</span>
+      <span><b>3</b> courses</span>
+    </p>
+  </div>
+</header>
+
+<nav class="filters" aria-label="Filter recipes">
+  <div class="shell filters-inner">
+    <span class="mono label">Show</span>
+    <button class="chip" type="button" data-filter="all" aria-pressed="true">Everything</button>
+    <button class="chip" type="button" data-filter="vegetarian" aria-pressed="false">Vegetarian</button>
+    <button class="chip" type="button" data-filter="poultry" aria-pressed="false">Poultry</button>
+    <button class="chip" type="button" data-filter="dessert" aria-pressed="false">Dessert</button>
+    <button class="chip hack-chip" type="button" data-toggle="hack" aria-pressed="false">Has a hack</button>
+    <span class="mono count" id="count">11 shown</span>
+  </div>
+</nav>
+
+<main class="shell">
+
+  <!-- ============ VEGETARIAN ============ -->
+  <section class="course" data-course="vegetarian">
+    <div class="course-head">
+      <h2>Vegetarian</h2>
+      <span class="rule"></span>
+      <span class="mono n">5</span>
+    </div>
+
+    <article class="recipe" data-course="vegetarian" data-hack="true">
+      <div class="rail">
+        <span class="kind" data-kind="shortcut">Shortcut</span>
+        <span class="meta">Instant Pot &middot; optional</span>
+      </div>
+      <div class="body">
+        <h3>Instant Pot Chana Masala</h3>
+        <p class="note">
+          I got this from the <em>Indian Instant Pot</em> cookbook, but I'm linking the corresponding
+          recipes on the author's blog. You'll want the onion masala first &mdash; it's the base for a lot of
+          what's below.
+        </p>
+        <div class="links">
+          <a class="rlink" href="https://twosleevers.com/pressure-cooker-onion-masala/" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Base</span> Onion masala <span class="arrow">&#8599;</span>
+          </a>
+          <a class="rlink" href="https://twosleevers.com/pressure-cooker-homestyle-chana-masala/" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> Homestyle chana masala <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+        <div class="hack">
+          <span class="h-label">The hack</span>
+          <p>Use canned chickpeas to skip the long soak.</p>
+        </div>
+        <details class="mods">
+          <summary>Recipe modifications</summary>
+          <ul>
+            <li>Substitute the <b>1 cup dry chickpeas</b> with <b>2 cans</b>, drained and rinsed.</li>
+            <li>Eliminate the <b>18-minute high-pressure cycle</b> entirely &mdash; simmer on the stove or in Saut&eacute; mode for roughly <b>5 minutes</b>, just to meld the flavors.</li>
+            <li>Reduce the <b>3 cups water</b> down to <b>1&ndash;1.5 cups</b>.</li>
+            <li>Mash roughly half the chickpeas into a paste to help thicken the sauce. Keep mashing at the end until it reaches the consistency you want.</li>
+          </ul>
+        </details>
+      </div>
+    </article>
+
+    <article class="recipe" data-course="vegetarian" data-hack="true">
+      <div class="rail">
+        <span class="kind" data-kind="shortcut">Shortcut</span>
+        <span class="meta">Needs onion masala</span>
+      </div>
+      <div class="body">
+        <h3>Bhindi Masala</h3>
+        <p class="note">
+          This one gets combined with the onion masala from the <em>Indian Instant Pot</em> cookbook, so all
+          you're really doing is cooking the okra and stirring the two together.
+        </p>
+        <div class="links">
+          <a class="rlink" href="https://twosleevers.com/pressure-cooker-onion-masala/" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Base</span> Onion masala <span class="arrow">&#8599;</span>
+          </a>
+          <a class="rlink" href="https://ministryofcurry.com/bhindi-masala/#recipe" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> Bhindi masala <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+        <div class="hack">
+          <span class="h-label">The hack</span>
+          <p>Use pre-prepared onion masala to skip the entire sauce portion of the cooking.</p>
+        </div>
+        <details class="mods">
+          <summary>Recipe modifications</summary>
+          <ul>
+            <li>Replace the dicing of fresh onions, garlic, ginger, and tomatoes with <b>premade onion masala</b>.</li>
+            <li>Use <b>3/4 cup</b> of pre-made onion masala per pound of vegetables.</li>
+          </ul>
+        </details>
+      </div>
+    </article>
+
+    <article class="recipe" data-course="vegetarian" data-hack="true">
+      <div class="rail">
+        <span class="kind" data-kind="shortcut">Shortcut</span>
+        <span class="meta">Batch-friendly</span>
+      </div>
+      <div class="body">
+        <h3>Korean Tofu Stir Fry</h3>
+        <p class="note">
+          I love this recipe, but I also like to make a lot at a time &mdash; which meant spending almost an hour
+          frying tofu in separate batches. Baking it on sheet pans let me condense down to a single batch,
+          prep the sauce and vegetables concurrently, and get the tofu texture consistent.
+        </p>
+        <div class="links">
+          <a class="rlink" href="https://thekoreanvegan.com/spicy-crunchy-garlic-tofu-kkampoong-tofu/" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> Kkampoong tofu <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+        <div class="hack">
+          <span class="h-label">The hack</span>
+          <p>Bake the tofu in the oven while you prepare the sauce and vegetables at the same time.</p>
+        </div>
+        <details class="mods">
+          <summary>Recipe modifications</summary>
+          <ul>
+            <li>Preheat the oven to <b>400&deg;F</b>.</li>
+            <li>After coating the tofu, spread it on a lined baking sheet in a <b>single layer</b> and bake <b>30&ndash;35 minutes</b>.</li>
+            <li>About <b>20 minutes in</b>, start preparing the sauce and vegetables.</li>
+            <li>Follow the end of the recipe: add the sauce to the cooked vegetables, then slide the baked tofu in.</li>
+          </ul>
+        </details>
+      </div>
+    </article>
+
+    <article class="recipe" data-course="vegetarian" data-hack="true">
+      <div class="rail">
+        <span class="kind" data-kind="shortcut">Shortcut</span>
+        <span class="meta">15&ndash;20 min active</span>
+      </div>
+      <div class="body">
+        <h3>Indian Dal</h3>
+        <div class="links">
+          <a class="rlink" href="https://www.recipetineats.com/dal-indian-lentil-curry/#recipe" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> Dal (Indian lentil curry) <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+        <div class="hack">
+          <span class="h-label">The hack</span>
+          <p>Use canned or pre-steamed lentils instead of dry.</p>
+        </div>
+        <details class="mods">
+          <summary>Recipe modifications</summary>
+          <ul>
+            <li>Substitute <b>2 cans</b> of drained and rinsed lentils, or <b>1 lb</b> pre-steamed, for the 1 cup dry.</li>
+            <li>Eliminate the <b>1-hour soak</b> and the <b>90-minute simmer</b> &mdash; active cooking drops to <b>15&ndash;20 minutes</b>.</li>
+            <li>Reduce the water from <b>4 cups</b> to about <b>1.5 cups</b>.</li>
+            <li>Use an immersion blender at the end to get the creamy texture.</li>
+          </ul>
+        </details>
+      </div>
+    </article>
+
+    <article class="recipe" data-course="vegetarian" data-hack="false">
+      <div class="rail">
+        <span class="kind" data-kind="as-written">As written</span>
+        <span class="meta">No changes needed</span>
+      </div>
+      <div class="body">
+        <h3>Balsamic Tomato Basil Pasta</h3>
+        <div class="links">
+          <a class="rlink" href="https://www.food.com/recipe/balsamic-tomato-basil-pasta-104630" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> Balsamic tomato basil pasta <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ POULTRY ============ -->
+  <section class="course" data-course="poultry">
+    <div class="course-head">
+      <h2>Poultry</h2>
+      <span class="rule"></span>
+      <span class="mono n">5</span>
+    </div>
+
+    <article class="recipe" data-course="poultry" data-hack="false">
+      <div class="rail">
+        <span class="kind" data-kind="original">Original</span>
+        <span class="meta">Serves 4</span>
+      </div>
+      <div class="body">
+        <h3>Elote Bowls</h3>
+        <p class="note">
+          My boyfriend and I made this up after discovering the Everything but the Elote seasoning from
+          Trader Joe's. It's become a weeknight regular. Enjoy!
+        </p>
+        <div class="links">
+          <a class="rlink" href="https://www.traderjoes.com/home/products/pdp/everything-but-the-elote-seasoning-blend-066804" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Key ingredient</span> Everything but the Elote seasoning <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+
+        <div class="card">
+          <p class="serves">Servings: 4</p>
+          <div class="card-grid">
+            <div>
+              <h4>Ingredients</h4>
+              <ul class="ing">
+                <li><span class="qty">1 tbsp</span> olive oil</li>
+                <li><span class="qty">&mdash;</span> Everything but the Elote seasoning</li>
+                <li><span class="qty">1 lb</span> ground turkey</li>
+                <li><span class="qty">2</span> jalape&ntilde;os, chopped</li>
+                <li><span class="qty">1</span> shallot, diced</li>
+                <li><span class="qty">&mdash;</span> garlic salt, to taste</li>
+                <li><span class="qty">&mdash;</span> taco seasoning, to taste</li>
+                <li><span class="qty">2 cans</span> corn</li>
+                <li><span class="qty">1 cup</span> Greek yogurt</li>
+                <li><span class="qty">&mdash;</span> Mexican-style shredded cheese, a handful</li>
+                <li><span class="qty">2</span> avocados</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Instructions</h4>
+              <ol class="steps">
+                <li>Heat the olive oil over medium heat and add the jalape&ntilde;os and shallots. Season with garlic salt. Stir until they're starting to look softer.</li>
+                <li>Add the ground turkey and season heavily with garlic salt and taco seasoning. Break up the turkey and stir it in with the jalape&ntilde;os and shallots. Cook about <b>10 minutes</b>, until the turkey is browned and starting to get crispy.</li>
+                <li>While the turkey and vegetables cook, drain the corn and combine it with the Greek yogurt in a large bowl. Drench with Elote seasoning. Add the cheese and stir everything together, then add some more Elote seasoning.</li>
+                <li>When the turkey is done, add it to the bowl with the corn. Stir everything together and serve over rice. Top with avocado sprinkled with Elote seasoning.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="recipe" data-course="poultry" data-hack="false">
+      <div class="rail">
+        <span class="kind" data-kind="as-written">As written</span>
+        <span class="meta">One pan</span>
+      </div>
+      <div class="body">
+        <h3>Baked Balsamic Chicken</h3>
+        <div class="links">
+          <a class="rlink" href="https://www.littlebroken.com/one-pan-balsamic-chicken/" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> One-pan balsamic chicken <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="recipe" data-course="poultry" data-hack="false">
+      <div class="rail">
+        <span class="kind" data-kind="as-written">As written</span>
+        <span class="meta">Soup</span>
+      </div>
+      <div class="body">
+        <h3>Asian Chicken Cabbage Soup</h3>
+        <div class="links">
+          <a class="rlink" href="https://thelemonbowl.com/asian-chicken-soup-with-cabbage/" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> Asian chicken soup with cabbage <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="recipe" data-course="poultry" data-hack="false">
+      <div class="rail">
+        <span class="kind" data-kind="as-written">As written</span>
+        <span class="meta">Instant Pot</span>
+      </div>
+      <div class="body">
+        <h3>Instant Pot Chicken Marsala</h3>
+        <div class="links">
+          <a class="rlink" href="https://www.lecremedelacrumb.com/instant-pot-chicken-marsala/" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> Instant Pot chicken marsala <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <article class="recipe" data-course="poultry" data-hack="false">
+      <div class="rail">
+        <span class="kind" data-kind="as-written">As written</span>
+        <span class="meta">Instant Pot</span>
+      </div>
+      <div class="body">
+        <h3>Instant Pot Butter Chicken</h3>
+        <p class="note">
+          Also from the <em>Indian Instant Pot</em> cookbook, linked here on the author's blog. This is one of
+          the best easy-to-delicious ratios I have ever found.
+        </p>
+        <div class="links">
+          <a class="rlink" href="https://twosleevers.com/instant-pot-butter-chicken/" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> Instant Pot butter chicken <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ DESSERT ============ -->
+  <section class="course" data-course="dessert">
+    <div class="course-head">
+      <h2>Dessert</h2>
+      <span class="rule"></span>
+      <span class="mono n">1</span>
+    </div>
+
+    <article class="recipe" data-course="dessert" data-hack="false">
+      <div class="rail">
+        <span class="kind" data-kind="as-written">As written</span>
+        <span class="meta">Worth the effort</span>
+      </div>
+      <div class="body">
+        <h3>Brown Butter Miso Chocolate Chip Cookies</h3>
+        <p class="note">
+          These are not low-effort cookies, but they are my favorite cookies I have ever made. 10/10, perfect
+          cookies &mdash; no hacks or modifications.
+        </p>
+        <div class="links">
+          <a class="rlink" href="https://butternutbakeryblog.com/miso-chocolate-chip-cookies/" target="_blank" rel="noopener noreferrer">
+            <span class="tag">Recipe</span> Miso chocolate chip cookies <span class="arrow">&#8599;</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <p class="empty" id="empty" hidden>Nothing matches that combination &mdash; try clearing the shortcut filter.</p>
+
+</main>
+
+<footer class="shell mono">
+  <span class="sig">Cook well, spend less time doing it.</span>
+  <span>Last updated August 2026</span>
+</footer>
+
+<script>
+  (function () {
+    var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
+    var recipes = Array.prototype.slice.call(document.querySelectorAll(".recipe"));
+    var sections = Array.prototype.slice.call(document.querySelectorAll(".course"));
+    var countEl = document.getElementById("count");
+    var emptyEl = document.getElementById("empty");
+
+    var course = "all";
+    var hackOnly = false;
+
+    function apply() {
+      var shown = 0;
+
+      recipes.forEach(function (r) {
+        var okCourse = course === "all" || r.dataset.course === course;
+        var okHack = !hackOnly || r.dataset.hack === "true";
+        var visible = okCourse && okHack;
+        r.hidden = !visible;
+        if (visible) shown++;
+      });
+
+      sections.forEach(function (s) {
+        var visibleInSection = s.querySelectorAll(".recipe:not([hidden])").length;
+        s.hidden = visibleInSection === 0;
+        var n = s.querySelector(".n");
+        if (n) n.textContent = String(visibleInSection);
+      });
+
+      countEl.textContent = shown + (shown === 1 ? " recipe" : " shown");
+      emptyEl.hidden = shown !== 0;
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        if (chip.dataset.toggle === "hack") {
+          hackOnly = chip.getAttribute("aria-pressed") !== "true";
+          chip.setAttribute("aria-pressed", String(hackOnly));
+        } else {
+          course = chip.dataset.filter;
+          chips.forEach(function (c) {
+            if (c.dataset.toggle !== "hack") {
+              c.setAttribute("aria-pressed", String(c === chip));
+            }
+          });
+        }
+        apply();
+      });
+    });
+
+    apply();
+  })();
+</script>
